@@ -1,10 +1,13 @@
 package com.springsecu.mysql.model;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Entity;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class CustomUserDetails extends User implements UserDetails {
@@ -17,7 +20,11 @@ public class CustomUserDetails extends User implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return null;
+    //checks all the roles configured in the constructions, collects them and adds to Spring security to use it
+    return getRoles()
+        .stream()
+        .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole()))
+        .collect(Collectors.toList());
   }
 
   @Override
