@@ -28,6 +28,16 @@ public class User {
   public User() {
   }
 
+  public User(User user) { //copyconstructor
+    this.active = user.getActive();
+    this.email = user.getEmail();
+    this.roles = user.getRoles();
+    this.name = user.getName();
+    this.lastName = user.getLastName();
+    this.id = user.getId();
+    this.password = user.getPassword();
+  }
+
   public int getId() {
     return id;
   }
